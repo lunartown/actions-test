@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url:
+    username:
+    password:
+    driver-class-name:
+
+  rabbitmq:
+    port:
+    host:
+    username:
+    password:
+    ssl:
+      enabled:
+  data:
+    redis:
+      host:
+      port:
+
+    mongodb:
+      host:
+      port:
+      username:
+      password:
+
+springdoc:
+  server-url:
+
+opensearch:
+  uris:
+  username:
+  password:
+  ssl:
+  suffix:

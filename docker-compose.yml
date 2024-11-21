@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      dockerfile: DockerFile
+      context: ./
+    container_name: starter
+    restart: always
+    ports:
+      - '80:80'
+    volumes:
+      - ./docker/server/dumps:/dumps
+      - ./docker/server/logs:/logs
+    environment:
+      GRADLE_OPTS: "-Xmx1g"
+      TZ: Asia/Seoul

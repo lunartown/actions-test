@@ -1,0 +1,40 @@
+name: Template Setup
+on:
+  create:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      project_name:
+        description: '새 프로젝트 이름'
+        required: true
+        type: string
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.ref_type == 'branch'
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Get project name
+        id: project
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "name=${{ github.event.inputs.project_name }}" >> $GITHUB_OUTPUT
+          else
+            echo "name=${{ github.event.repository.name }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Setup project
+        run: |
+          chmod +x ./setup.sh
+          ./setup.sh "${{ steps.project.outputs.name }}" "${{ steps.project.outputs.name }}"
+        
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "🎉 Initialize project: ${{ steps.project.outputs.name }}"
+          git push
