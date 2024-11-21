@@ -68,7 +68,7 @@ for file in docker-compose.yml docker-compose.local.yml; do
 done
 
 # 초기화 파일들 삭제
-rm -f .github/workflows/template-setup.yml
+rm -f .github/workflows/main.yml
 rm -f ./setup.sh
 
 git config --local user.email "action@github.com"
