@@ -1,4 +1,8 @@
 name: Template Setup
+
+permissions:
+  contents: write
+
 on:
   create:
     branches: [ main, master ]
