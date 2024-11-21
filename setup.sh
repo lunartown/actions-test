@@ -67,6 +67,10 @@ for file in docker-compose.yml docker-compose.local.yml; do
         -e "s/${OLD_PROJECT_LOWER}_mysql_db/${NEW_PROJECT_LOWER}_mysql_db/g" "$file"
 done
 
+# 초기화 파일들 삭제
+rm -f .github/workflows/template-setup.yml
+rm -f ./setup.sh
+
 echo "프로젝트 이름 변경이 완료되었습니다!"
 echo "1. IDE에서 프로젝트를 다시 불러오세요"
 echo "2. 프로젝트를 새로 빌드해보세요"
