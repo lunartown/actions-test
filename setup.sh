@@ -71,6 +71,11 @@ done
 rm -f .github/workflows/template-setup.yml
 rm -f ./setup.sh
 
+git config --local user.email "action@github.com"
+git config --local user.name "GitHub Action"
+git add .
+git commit --amend --no-edit
+
 echo "프로젝트 이름 변경이 완료되었습니다!"
 echo "1. IDE에서 프로젝트를 다시 불러오세요"
 echo "2. 프로젝트를 새로 빌드해보세요"
