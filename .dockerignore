@@ -1,0 +1,6 @@
+.idea
+.git
+.gitignore
+docker
+*.md
+rename-project.sh
