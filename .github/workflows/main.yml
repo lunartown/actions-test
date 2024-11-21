@@ -5,7 +5,7 @@ permissions:
 
 on:
   create:
-    branches: [ main, master ]
+    branches: [ prod ]
   workflow_dispatch:
     inputs:
       project_name:
