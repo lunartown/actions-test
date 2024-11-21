@@ -3,4 +3,4 @@
 .gitignore
 docker
 *.md
-rename-project.sh
+setup.sh

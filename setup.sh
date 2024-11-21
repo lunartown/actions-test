@@ -6,7 +6,7 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
-OLD_PROJECT=Starter
+OLD_PROJECT=Template
 NEW_PROJECT=$1
 NEW_PACKAGE=$2
 
@@ -17,7 +17,32 @@ OLD_PACKAGE=${OLD_PROJECT_LOWER//-/.}
 OLD_PACKAGE_PATH=${OLD_PACKAGE//./\/}
 NEW_PACKAGE_PATH=${NEW_PACKAGE//./\/}
 
+# 현재 스크립트가 있는 디렉토리명을 템플릿 이름으로 사용
+TEMPLATE_DIR="$(basename "$(dirname "$(readlink -f "$0")")")"
+PARENT_DIR="$(dirname "$(dirname "$(readlink -f "$0")")")"
+NEW_PROJECT_DIR="$PARENT_DIR/$NEW_PROJECT"
+
 echo "프로젝트명 변경: $OLD_PROJECT -> $NEW_PROJECT"
+
+# 새 프로젝트 디렉토리가 이미 존재하는지 확인
+if [ -d "$NEW_PROJECT_DIR" ]; then
+    echo "에러: $NEW_PROJECT_DIR 디렉토리가 이미 존재합니다."
+    exit 1
+fi
+
+echo "프로젝트 생성 중: $NEW_PROJECT"
+echo "템플릿 디렉토리: $TEMPLATE_DIR"
+echo "생성 위치: $NEW_PROJECT_DIR"
+
+# 현재 디렉토리(템플릿)의 상위 디렉토리로 이동하여 복사
+cd "$PARENT_DIR"
+cp -r "$TEMPLATE_DIR" "$NEW_PROJECT"
+
+# 작업 디렉토리를 새 프로젝트 디렉토리로 변경
+cd "$NEW_PROJECT" || exit 1
+
+# 스크립트 파일 삭제
+rm "setup.sh"
 
 # Gradle 설정 변경
 [ -f "settings.gradle" ] && sed -i "s/rootProject.name.*=.*'$OLD_PROJECT_LOWER'/rootProject.name = '$NEW_PROJECT_LOWER'/" settings.gradle

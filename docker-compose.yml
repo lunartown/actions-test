@@ -5,7 +5,7 @@ services:
     build:
       dockerfile: DockerFile
       context: ./
-    container_name: starter
+    container_name: template
     restart: always
     ports:
       - '80:80'
