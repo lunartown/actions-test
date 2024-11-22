@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
     echo "사용법: $0 [새_레포지토리명] [새_프로젝트명] [새_패키지명]"
     echo "예시: $0 new-project new-project-api project"
     exit 1
