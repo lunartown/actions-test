@@ -1,14 +1,15 @@
 #!/bin/bash
 
 if [ "$#" -ne 2 ]; then
-    echo "사용법: $0 [새_프로젝트명] [새_패키지명]"
-    echo "예시: $0 new-project-api new-project"
+    echo "사용법: $0 [새_레포지토리명] [새_프로젝트명] [새_패키지명]"
+    echo "예시: $0 new-project new-project-api project"
     exit 1
 fi
 
 OLD_PROJECT=Template
-NEW_PROJECT=$1
-NEW_PACKAGE=$2
+NEW_REPOSITORY=$1
+NEW_PROJECT=$2
+NEW_PACKAGE=$3
 
 # 소문자 변환
 OLD_PROJECT_LOWER=$(echo $OLD_PROJECT | tr '[:upper:]' '[:lower:]')
@@ -66,6 +67,10 @@ for file in docker-compose.yml docker-compose.local.yml; do
         -e "s/${OLD_PROJECT_LOWER}_mongo_db/${NEW_PROJECT_LOWER}_mongo_db/g" \
         -e "s/${OLD_PROJECT_LOWER}_mysql_db/${NEW_PROJECT_LOWER}_mysql_db/g" "$file"
 done
+
+# README.md 변경
+find . -type f -name "README.md" -exec sed -i \
+-e "s/java-starter/${NEW_REPOSITORY}/g"
 
 # 초기화 파일들 삭제
 rm -f .github/workflows/main.yml
