@@ -69,7 +69,7 @@ for file in docker-compose.yml docker-compose.local.yml; do
 done
 
 # README.md 변경
-find . -type f -name "README.md" -exec sed -i "s/java-starter/${NEW_REPOSITORY}/g"
+find . -type f -name "README.md" -exec sed -i "s/java-starter/${NEW_REPOSITORY}/g" {} +
 
 # 초기화 파일들 삭제
 rm -f .github/workflows/main.yml
