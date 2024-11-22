@@ -45,15 +45,23 @@ jobs:
         run: |
           REPO_NAME=${{ steps.create-repo.outputs.result }}
 
+          # template 폴더를 임시 디렉토리로 복사
+          TEMP_DIR=$(mktemp -d)
+          cp -r template/* template/.* "$TEMP_DIR" 2>/dev/null || true
+          cd "$TEMP_DIR"
+
           # git init 및 remote 추가만 수행
-          rm -rf .git
           git init
           git remote add origin "https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${REPO_NAME}.git"
 
           # setup.sh가 나머지 작업 수행
-          chmod +x ./setup.sh
-          ./setup.sh "${{ github.event.inputs.repo-name }}" "${{ github.event.inputs.project-name }}" "${{ github.event.inputs.package-name }}"
+          chmod +x ../setup.sh
+          ../setup.sh "${{ github.event.inputs.repo-name }}" "${{ github.event.inputs.project-name }}" "${{ github.event.inputs.package-name }}"
 
           # setup.sh에서 commit까지 했으므로 push만 수행
           git branch -M prod
           git push -u origin prod
+
+          # 임시 디렉토리 정리
+          cd ..
+          rm -rf "$TEMP_DIR"
