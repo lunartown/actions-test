@@ -52,7 +52,7 @@ jobs:
 
           # setup.sh가 나머지 작업 수행
           chmod +x ./setup.sh
-          ./setup.sh "${{ github.event.inputs.project-name }}" "${{ github.event.inputs.package-name }}"
+          ./setup.sh "${{ github.event.inputs.repo-name }}" "${{ github.event.inputs.project-name }}" "${{ github.event.inputs.package-name }}"
 
           # setup.sh에서 commit까지 했으므로 push만 수행
           git branch -M prod
