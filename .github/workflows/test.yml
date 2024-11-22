@@ -67,14 +67,22 @@ jobs:
           github-token: ${{ secrets.PAT_TOKEN }}
           script: |
             const [owner, repo] = '${{ steps.create-repo.outputs.result }}'.split('/');
-            await github.rest.repos.updateBranchProtection({
-              owner: owner,
-              repo: repo,
-              branch: 'main',
-              required_status_checks: null,
-              enforce_admins: true,
-              restrictions: null,
-              required_pull_request_reviews: {
-                required_approving_review_count: 1
-              }
-            });
+            try {
+              // 잠시 대기하여 레포지토리와 브랜치가 생성될 때까지 기다림
+              await new Promise(resolve => setTimeout(resolve, 5000));
+              
+              await github.rest.repos.updateBranchProtection({
+                owner: owner,
+                repo: repo.replace(/['"]/g, ''), // 따옴표 제거
+                branch: 'main',
+                required_status_checks: null,
+                enforce_admins: true,
+                restrictions: null,
+                required_pull_request_reviews: {
+                  required_approving_review_count: 1
+                }
+              });
+            } catch (error) {
+              console.log('Error setting branch protection:', error);
+              // 브랜치 보호 설정 실패해도 전체 워크플로우는 계속 진행
+            }
