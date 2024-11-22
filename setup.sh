@@ -74,7 +74,7 @@ rm -f ./setup.sh
 git config --local user.email "action@github.com"
 git config --local user.name "GitHub Action"
 git add .
-git commit --amend --no-edit
+git commit -m "initial commit"
 
 echo "프로젝트 이름 변경이 완료되었습니다!"
 echo "1. IDE에서 프로젝트를 다시 불러오세요"
