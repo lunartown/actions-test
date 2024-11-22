@@ -47,20 +47,18 @@ jobs:
 
           # template 폴더를 임시 디렉토리로 복사
           TEMP_DIR=$(mktemp -d)
-          cp -r template/* template/.* "$TEMP_DIR" 2>/dev/null || true
+          cd template
+          cp -r * .[!.]* "$TEMP_DIR/" 2>/dev/null || true
+          cd ..
           
-          # 현재 디렉토리의 setup.sh를 임시 디렉토리로 복사
-          cp setup.sh "$TEMP_DIR/"
+          # 깃 저장소 초기화
           cd "$TEMP_DIR"
-          
-          # 깃 저장소 초기화 (기존 .git 폴더가 있다면 제거)
-          rm -rf .git
           git init
           git remote add origin "https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${REPO_NAME}.git"
           
           # setup.sh 실행
-          chmod +x ./setup.sh
-          ./setup.sh "${{ github.event.inputs.repo-name }}" "${{ github.event.inputs.project-name }}" "${{ github.event.inputs.package-name }}"
+          chmod +x ../setup.sh
+          ../setup.sh "${{ github.event.inputs.repo-name }}" "${{ github.event.inputs.project-name }}" "${{ github.event.inputs.package-name }}"
           
           # 커밋 및 푸시
           git branch -M prod
