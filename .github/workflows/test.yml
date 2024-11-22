@@ -44,6 +44,7 @@ jobs:
       - name: Setup and push
         run: |
           REPO_NAME=${{ steps.create-repo.outputs.result }}
+          WORKFLOW_DIR=$PWD
 
           # template 폴더를 임시 디렉토리로 복사
           TEMP_DIR=$(mktemp -d)
@@ -57,8 +58,8 @@ jobs:
           git remote add origin "https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${REPO_NAME}.git"
           
           # setup.sh 실행
-          chmod +x ../setup.sh
-          ../setup.sh "${{ github.event.inputs.repo-name }}" "${{ github.event.inputs.project-name }}" "${{ github.event.inputs.package-name }}"
+          chmod +x "$WORKFLOW_DIR/setup.sh"
+          "$WORKFLOW_DIR/setup.sh" "${{ github.event.inputs.repo-name }}" "${{ github.event.inputs.project-name }}" "${{ github.event.inputs.package-name }}"
           
           # 커밋 및 푸시
           git branch -M prod
