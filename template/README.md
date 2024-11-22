@@ -4,8 +4,8 @@
 
 ### Requirement
 
-- Java >= 17.\*
-- docker >= 3.\*
+- Java >= 17.*
+- docker >= 3.*
 
 ### Setup
 
