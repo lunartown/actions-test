@@ -3,22 +3,27 @@
 ## Development
 
 ### Requirement
+- Java >= 17.*
+- docker >= 3.*
 
-- Java >= 17.\*
-- docker >= 3.\*
+### Create New Project
+
+1. Go to GitHub Actions tab in this repository
+2. Run 'Create Template Repository' workflow with:
+  - Repository name
+  - Project name
+  - Package name
+  - Visibility (private/public)
+
+3. New repository will be automatically created with your settings
 
 ### Setup
-
 ```
-git clone https://github.com/teamo2dev/java-starter.git && cd java-starter
-cp src/main/resources/application-example.yml src/main/resources/application-local.yml
-vim src/main/resources/application-local.yml # edit application-local.yml file
-cp docker/example.env docker/local.env
-vim docker/local.env # edit local.env file
-```
-
-### Local Run
-
-```
-docker-compose -f docker-compose.local.yml --env-file docker/local.env up -d (--build)
+# Enable required dependencies
+# 1. Uncomment needed libraries in build.gradle
+#    - For MySQL: runtimeOnly 'com.mysql:mysql-connector-j'
+#    - For Redis: implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+# 2. Uncomment corresponding services in docker-compose.local.yml
+#    - For MySQL: Uncomment mysql service section
+#    - For Redis: Uncomment redis service section
 ```
