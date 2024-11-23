@@ -1,4 +1,4 @@
-# java-starter
+# template
 
 ## Development
 
@@ -10,7 +10,7 @@
 ### Setup
 
 ```
-git clone https://github.com/teamo2dev/java-starter.git && cd java-starter
+git clone https://github.com/teamo2dev/template.git && cd template
 cp src/main/resources/application-example.yml src/main/resources/application-local.yml
 vim src/main/resources/application-local.yml # edit application-local.yml file
 cp docker/example.env docker/local.env
