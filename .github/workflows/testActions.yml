@@ -1,0 +1,11 @@
+name: testActions
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print test message
+        run: echo "Hello, this is a test workflow!"
