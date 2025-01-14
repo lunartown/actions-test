@@ -1,0 +1,49 @@
+name: Deploy Status Notification
+
+on:
+  workflow_run:
+    workflows: testActions
+    types:
+      - completed
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send notification
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "attachments": [{
+                "color": "${{ github.event.workflow_run.conclusion == 'success' && 'good' || 'danger' }}",
+                "author_name": "${{ github.event.workflow_run.conclusion == 'success' && '✅ 배포 성공' || '❌ 배포 실패' }}",
+                "text": "${{ github.event.workflow_run.conclusion == 'success' && ':rocket: 프로덕션 배포가 완료되었습니다.' || ':boom: 배포 중 오류가 발생했습니다.' }}",
+                "fields": [
+                  {
+                    "title": "Repository",
+                    "value": "${{ github.repository }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Branch",
+                    "value": "${{ github.ref_name }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Workflow",
+                    "value": "${{ github.event.workflow_run.name }}",
+                    "short": true
+                  },
+                  {
+                    "title": "상세 정보",
+                    "value": "${{ github.event.workflow_run.html_url }}",
+                    "short": false
+                  }
+                ],
+                "footer": "Deployed at ${{ github.event.workflow_run.updated_at }}"
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
