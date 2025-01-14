@@ -13,8 +13,9 @@ jobs:
       - name: Send notification
         uses: slackapi/slack-github-action@v2.0.0
         with:
-          status: custom
-          custom_payload: |
+          webhook: "https://hooks.slack.com/services/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"
+          webhook-type: incoming-webhook
+          payload: |
             {
               "attachments": [{
                 "color": "${{ github.event.workflow_run.conclusion == 'success' && 'good' || 'danger' }}",
@@ -45,5 +46,3 @@ jobs:
                 "footer": "Deployed at ${{ github.event.workflow_run.updated_at }}"
               }]
             }
-        env:
-          SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
