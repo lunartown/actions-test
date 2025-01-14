@@ -16,15 +16,15 @@ jobs:
           webhook: "https://hooks.slack.com/services/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"
           webhook-type: incoming-webhook
           payload: |
-             {
-              "text": "*GitHub Action build result*: ${{ github.event.workflow_run.conclusion }}",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ github.event.workflow_run.conclusion }}\n${{ github.event.workflow_run.html_url }}"
-                  }
+           {
+            "text": "*GitHub Action build result*: ${{ github.event.workflow_run.conclusion }}",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "GitHub Action build result: ${{ github.event.workflow_run.conclusion }}\n${{ github.event.workflow_run.html_url }}"
                 }
-              ]
-            }
+              }
+            ]
+          }
