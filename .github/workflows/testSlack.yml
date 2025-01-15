@@ -10,15 +10,35 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
+
+      - name: Get status emoji
+        id: status
+        run: |
+          if [ "${{ github.event.workflow_run.conclusion }}" = "success" ]; then
+            echo "emoji=✅" >> $GITHUB_OUTPUT
+            echo "status=성공" >> $GITHUB_OUTPUT
+          else
+            echo "emoji=❌" >> $GITHUB_OUTPUT
+            echo "status=실패" >> $GITHUB_OUTPUT
+          fi
+
       - name: Send notification
         uses: slackapi/slack-github-action@v2.0.0
         with:
-          webhook: ${{ secrets.SLACK_WEBHOOK_URL}}
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
-            text: "*GitHub Action build result*: ${{ job.status }}\n$TEST"
-            blocks:
-              - type: "section"
-                text:
-                  type: "mrkdwn"
-                  text: "GitHub Action build result: ${{ job.status }}\n$TEST2"
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*[ ${{ steps.date.outputs.date }} ]* ${{ steps.status.outputs.emoji }}\n백엔드 배포 공유드립니다.\n\n업데이트 사항이 배포되었으니 업무에 참고해주세요.\n\n*세부사항*\n상태 : 배포 ${{ steps.status.outputs.status }}\n내용 : ${{ github.event.workflow_run.head_commit.message || 'QA중인 사항 없어 마스터 브랜치 기준으로 배포' }}\n담당자 : ${{ github.actor }}"
+                  }
+                }
+              ]
+            }
