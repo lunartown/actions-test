@@ -37,7 +37,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*${{ github.event.workflow_run.repository.name }}* (${{ github.event.workflow_run.head_branch }})\n*[ ${{ steps.date.outputs.date }} ]* ${{ steps.status.outputs.emoji }}\n백엔드 배포 공유드립니다.\n\n업데이트 사항이 배포되었으니 업무에 참고해주세요.\n\n*세부사항*\n상태 : 배포 ${{ steps.status.outputs.status }}\n내용 : ${{ github.event.workflow_run.head_commit.message || 'QA중인 사항 없어 마스터 브랜치 기준으로 배포' }}\n담당자 : ${{ github.actor }}"
+                    "text": ":loudspeaker: *${{ github.event.workflow_run.repository.name }}* (${{ github.event.workflow_run.head_branch }})\n*[ ${{ steps.date.outputs.date }} ]* ${{ steps.status.outputs.emoji }}\n백엔드 배포 공유드립니다.\n\n업데이트 사항이 배포되었으니 업무에 참고해주세요.\n\n*세부사항*\n상태 : 배포 ${{ steps.status.outputs.status }}\n내용 : ${{ github.event.workflow_run.head_commit.message || 'QA중인 사항 없어 마스터 브랜치 기준으로 배포' }}\n담당자 : ${{ github.actor }}"
                   }
                 }
               ]
