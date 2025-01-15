@@ -13,7 +13,7 @@ jobs:
       - name: Send notification
         uses: slackapi/slack-github-action@v2.0.0
         with:
-          webhook: "https://hooks.slack.com/services/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"
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL}}
           webhook-type: incoming-webhook
           payload: |
             text: "*GitHub Action build result*: ${{ job.status }}\n$TEST"
